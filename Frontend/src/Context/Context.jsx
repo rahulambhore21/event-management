@@ -10,7 +10,7 @@ export const useApi = () => useContext(ApiContext);
 // Provider component
 export const ApiProvider = ({ children }) => {
   // Set the base URL for API calls - can be updated for production
-  const [baseUrl, setBaseUrl] = useState('http://localhost:5000/api');
+  const [baseUrl, setBaseUrl] = useState('https://event-management-backend-nx6s.onrender.com');
   
   // Create axios instance with default config
   const api = axios.create({
