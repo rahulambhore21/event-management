@@ -2,7 +2,7 @@ import './App.css'
 import Auth from './pages/Auth/Auth';
 import Home from './pages/Home/Home'
 import Event from './pages/Event/Event';
-import { BrowserRouter, Routes, Route } from "react-router";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AddEvent from './pages/AddEvent/AddEvent';
 import Profile from './pages/Profile/Profile';
 import ApiProvider from './Context/Context';

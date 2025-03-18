@@ -13,11 +13,15 @@ function Events() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
+        setLoading(true);
         const data = await api.getEvents();
         setEvents(data);
-        setLoading(false);
+        setError('');
       } catch (err) {
-        setError('Failed to fetch events. Please try again later.');
+        console.error("Error fetching events:", err);
+        setError('Failed to fetch events. Using cached or sample data if available.');
+        // The API context will handle fallback to mock data if needed
+      } finally {
         setLoading(false);
       }
     };
@@ -26,22 +30,46 @@ function Events() {
   }, [api]);
 
   if (loading) {
-    return <p className="text-center">Loading events...</p>;
+    return (
+      <div className="loading-container">
+        <p className="loading-text">Loading events...</p>
+        <div className="loading-spinner"></div>
+      </div>
+    );
   }
 
-  if (error) {
-    return <p className="text-center text-danger">{error}</p>;
+  // If we have no events and an error, show a more user-friendly message
+  if (error && events.length === 0) {
+    return (
+      <div className="error-container">
+        <p className="error-message">{error}</p>
+        <p>Our services might be temporarily unavailable. Please try again later.</p>
+        <button className="retry-button" onClick={() => window.location.reload()}>
+          Retry
+        </button>
+      </div>
+    );
   }
 
   return (
     <>
+      {error && <p className="warning-banner">{error}</p>}
       <h1 className='text-center font-bold text-5xl mb-20'>Events</h1>
       <div className="events-container">
-        {events.map(event => (
-          <Link to={`/event/${event._id}`} key={event._id}>
-            <Eventcard title={event.title} description={event.description} img={event.img} />
-          </Link>
-        ))}
+        {events.length > 0 ? (
+          events.map(event => (
+            <Link to={`/event/${event._id}`} key={event._id}>
+              <Eventcard 
+                title={event.title} 
+                description={event.description} 
+                img={event.img} 
+                date={event.date}
+              />
+            </Link>
+          ))
+        ) : (
+          <p className="no-events-message">No events found. Be the first to create an event!</p>
+        )}
       </div>
     </>
   );
