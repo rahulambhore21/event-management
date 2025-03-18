@@ -1,0 +1,130 @@
+.auth-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 450px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  position: relative;
+}
+
+.auth-header {
+  background: linear-gradient(to right, #4b79a1, #283e51);
+  padding: 25px 20px;
+  text-align: center;
+  color: white;
+}
+
+.auth-header h1 {
+  font-size: 2rem;
+  margin: 0;
+  font-weight: 600;
+}
+
+.auth-header p {
+  margin: 10px 0 0;
+  opacity: 0.8;
+}
+
+.auth-body {
+  background: white;
+  padding: 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #e1e1e1;
+  background-color: #f9f9f9;
+  transition: all 0.3s;
+}
+
+.form-input:focus {
+  border-color: #4b79a1;
+  box-shadow: 0 0 0 2px rgba(75, 121, 161, 0.2);
+  background-color: white;
+}
+
+.form-select {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: 1px solid #e1e1e1;
+  background-color: #f9f9f9;
+  transition: all 0.3s;
+}
+
+.auth-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: 8px;
+  background: linear-gradient(to right, #4b79a1, #283e51);
+  color: white;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.auth-btn:hover {
+  background: linear-gradient(to right, #283e51, #4b79a1);
+  transform: translateY(-2px);
+}
+
+.auth-footer {
+  text-align: center;
+  margin-top: 20px;
+  color: #555;
+}
+
+.auth-link {
+  color: #4b79a1;
+  cursor: pointer;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.auth-link:hover {
+  text-decoration: underline;
+}
+
+.form-checkbox {
+  display: flex;
+  align-items: center;
+}
+
+.form-checkbox input {
+  margin-right: 8px;
+}
+
+.remember-forgot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.error-message {
+  background-color: #ffe6e6;
+  color: #d8000c;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  border-left: 4px solid #d8000c;
+}

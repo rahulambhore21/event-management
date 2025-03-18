@@ -1,0 +1,142 @@
+.profile-page {
+  min-height: 100vh;
+  background-color: #f5f7fa;
+  padding: 50px 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.profile-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+}
+
+.profile-header {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  margin-bottom: 40px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 30px;
+}
+
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #4e6ef1;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5em;
+  font-weight: bold;
+  box-shadow: 0 5px 15px rgba(78, 110, 241, 0.3);
+}
+
+.profile-heading {
+  font-size: 2em;
+  color: #333;
+  margin: 0;
+  font-weight: 600;
+}
+
+.profile-card {
+  background-color: #f9fafc;
+  border-radius: 10px;
+  padding: 25px;
+  margin-bottom: 30px;
+  border-left: 4px solid #4e6ef1;
+}
+
+.section-title {
+  font-size: 1.3em;
+  color: #4e6ef1;
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.profile-info {
+  display: flex;
+  margin: 15px 0;
+  font-size: 1.1em;
+}
+
+.info-label {
+  width: 100px;
+  font-weight: 600;
+  color: #555;
+}
+
+.info-value {
+  flex: 1;
+  color: #333;
+}
+
+.profile-actions {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1em;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  text-align: center;
+}
+
+.edit-button {
+  background-color: #4e6ef1;
+  color: white;
+}
+
+.events-button {
+  background-color: #6d7fcc;
+  color: white;
+}
+
+.logout-button {
+  background-color: #f8f9fa;
+  color: #dc3545;
+  border: 1px solid #dc3545;
+}
+
+.edit-button:hover, .events-button:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.logout-button:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .profile-container {
+    padding: 20px;
+    margin: 0 15px;
+  }
+  
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .profile-actions {
+    flex-direction: column;
+  }
+  
+  .btn {
+    width: 100%;
+  }
+}
