@@ -9,7 +9,11 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
-app.use(cors("https://event-management-frontend-kqj6.onrender.com/api"));
+// Fix CORS configuration
+app.use(cors({
+  origin: ["https://event-management-frontend-kqj6.onrender.com", "http://localhost:5173"],
+  credentials: true
+}));
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);

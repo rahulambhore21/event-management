@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { useApi } from '../../Context/Context';
 import './AddEvent.css';
 
 const AddEvent = () => {
@@ -17,6 +17,7 @@ const AddEvent = () => {
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
+  const api = useApi();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -31,15 +32,10 @@ const AddEvent = () => {
     }
 
     try {
-      await axios.post(
-        'http://localhost:5000/api/events',
-        { title, description, date, time, location, category, img, price, registrationDeadline, eligibility },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      // Use the API context instead of hardcoded URL
+      await api.createEvent({ 
+        title, description, date, time, location, category, img, price, registrationDeadline, eligibility 
+      });
 
       alert('Event created successfully!');
       navigate('/'); // Redirect to home page
