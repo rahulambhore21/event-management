@@ -15,6 +15,10 @@ export const ApiProvider = ({ children }) => {
   // Create axios instance with default config
   const api = axios.create({
     baseURL: baseUrl,
+    withCredentials: true, // Important for CORS with credentials
+    headers: {
+      'Content-Type': 'application/json'
+    }
   });
 
   // Add token to requests if available
@@ -26,43 +30,101 @@ export const ApiProvider = ({ children }) => {
     return config;
   });
 
+  // Handle response errors
+  api.interceptors.response.use(
+    response => response,
+    error => {
+      if (error.message === 'Network Error') {
+        console.error('Network error - CORS issue or server unavailable');
+        // You could show a notification to the user here
+      }
+      return Promise.reject(error);
+    }
+  );
+
   // API utility methods
   const apiMethods = {
     // Auth methods
     login: async (email, password) => {
-      const response = await api.post('/auth/login', { email, password });
-      return response.data;
+      try {
+        const response = await api.post('/auth/login', { email, password });
+        return response.data;
+      } catch (error) {
+        console.error('Login error:', error);
+        throw error;
+      }
     },
     
     register: async (userData) => {
-      const response = await api.post('/auth/register', userData);
-      return response.data;
+      try {
+        const response = await api.post('/auth/register', userData);
+        return response.data;
+      } catch (error) {
+        console.error('Registration error:', error);
+        throw error;
+      }
     },
     
     // Event methods
     getEvents: async () => {
-      const response = await api.get('/events');
-      return response.data;
+      try {
+        const response = await api.get('/events');
+        return response.data;
+      } catch (error) {
+        console.error('Get events error:', error);
+        throw error;
+      }
     },
     
     getEvent: async (id) => {
-      const response = await api.get(`/events/${id}`);
-      return response.data;
+      try {
+        const response = await api.get(`/events/${id}`);
+        return response.data;
+      } catch (error) {
+        console.error('Get event error:', error);
+        throw error;
+      }
     },
     
     createEvent: async (eventData) => {
-      const response = await api.post('/events', eventData);
-      return response.data;
+      try {
+        const response = await api.post('/events', eventData);
+        return response.data;
+      } catch (error) {
+        console.error('Create event error:', error);
+        throw error;
+      }
     },
     
     updateEvent: async (id, eventData) => {
-      const response = await api.put(`/events/${id}`, eventData);
-      return response.data;
+      try {
+        const response = await api.put(`/events/${id}`, eventData);
+        return response.data;
+      } catch (error) {
+        console.error('Update event error:', error);
+        throw error;
+      }
     },
     
     deleteEvent: async (id) => {
-      const response = await api.delete(`/events/${id}`);
-      return response.data;
+      try {
+        const response = await api.delete(`/events/${id}`);
+        return response.data;
+      } catch (error) {
+        console.error('Delete event error:', error);
+        throw error;
+      }
+    },
+
+    // Test CORS connection
+    testConnection: async () => {
+      try {
+        const response = await api.get('/cors-test');
+        return response.data;
+      } catch (error) {
+        console.error('CORS test failed:', error);
+        throw error;
+      }
     },
 
     // Helper method to change the base URL (for production deployment)

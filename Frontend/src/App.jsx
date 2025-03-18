@@ -16,7 +16,7 @@ function App() {
           <Route path="/login" element={<Auth />} />
           <Route path="/event/:id" element={<Event />} />
           <Route path="/addevent" element={<AddEvent/>} />
-          <Route path="profile" element={<Profile/>} />
+          <Route path="/profile" element={<Profile/>} />
         </Routes>
       </BrowserRouter>
     </ApiProvider>
