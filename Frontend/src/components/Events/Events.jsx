@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import './Events.css';
 import Eventcard from './Eventcard';
-import Auth from '../../pages/Auth/Auth';
+import { useApi } from '../../Context/Context';
 
 function Events() {
   const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const api = useApi();
 
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/api/events');
-        setEvents(res.data);
+        const data = await api.getEvents();
+        setEvents(data);
         setLoading(false);
       } catch (err) {
         setError('Failed to fetch events. Please try again later.');
@@ -23,7 +23,7 @@ function Events() {
     };
 
     fetchEvents();
-  }, []);
+  }, [api]);
 
   if (loading) {
     return <p className="text-center">Loading events...</p>;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import './Auth.css'
+import { useApi } from '../../Context/Context';
 
 function Auth() {
   const [isLogin, setIsLogin] = useState(true);
@@ -13,6 +13,7 @@ function Auth() {
   const [role, setRole] = useState('user');
   const [error, setError] = useState('');
   const navigate = useNavigate();
+  const api = useApi();
 
   const toggleForm = () => {
     setIsLogin(!isLogin);
@@ -53,14 +54,19 @@ function Auth() {
     }
     
     try {
-      const response = isLogin 
-        ? await axios.post('http://localhost:5000/api/auth/login', { email, password })
-        : await axios.post('http://localhost:5000/api/auth/register', 
-            { name, email, college, password, confirmPassword, role });
+      let response;
+      
+      if (isLogin) {
+        response = await api.login(email, password);
+      } else {
+        response = await api.register({ 
+          name, email, college, password, confirmPassword, role 
+        });
+      }
       
       // Save token and user info to localStorage
-      localStorage.setItem('token', response.data.token);
-      localStorage.setItem('user', JSON.stringify(response.data.user));
+      localStorage.setItem('token', response.token);
+      localStorage.setItem('user', JSON.stringify(response.user));
       navigate('/');
     } catch (err) {
       setError(err.response?.data?.message || (isLogin ? 'Login failed. Please try again.' : 'Registration failed. Please try again.'));
