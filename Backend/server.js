@@ -3,29 +3,23 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const authRoutes = require('./routes/auth');
 const eventRoutes = require('./routes/event');
+const corsMiddleware = require('./middleware/cors');
 require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 const MONGO_URI = process.env.MONGO_URI;
 
-// Enable CORS for all requests - more permissive approach
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-  
-  if (req.method === 'OPTIONS') {
-    return res.sendStatus(200);
-  }
-  
-  next();
-});
+// Apply custom CORS middleware first
+app.use(corsMiddleware);
 
-// Also keep the cors middleware as a backup
+// Use cors package with proper configuration
 app.use(cors({
-  origin: '*',
-  credentials: false
+  origin: ['https://event-management-frontend-kqj6.onrender.com', 'http://localhost:3000', 'http://localhost:5173'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin'],
+  credentials: true,
+  maxAge: 86400
 }));
 
 app.use(express.json());
@@ -35,9 +29,18 @@ app.get('/health', (req, res) => {
   res.json({ status: 'ok', time: new Date().toISOString() });
 });
 
-// Check if headers are being set correctly
+// CORS test endpoint
+app.get('/cors-test', (req, res) => {
+  res.json({ 
+    success: true, 
+    message: 'CORS is properly configured!',
+    origin: req.headers.origin || 'Unknown'
+  });
+});
+
+// Request logging middleware with improved details
 app.use((req, res, next) => {
-  console.log(`${req.method} ${req.path} - Origin: ${req.headers.origin}`);
+  console.log(`${req.method} ${req.path} - Origin: ${req.headers.origin || 'Unknown'} - IP: ${req.ip}`);
   next();
 });
 
